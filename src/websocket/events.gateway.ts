@@ -30,5 +30,9 @@ export class EventsGateway implements OnGatewayInit, OnGatewayConnection {
     console.log(data);
     return data;
   }
+
+  broadcastMessage(data: string) {
+    this.wss.emit("broadcast", data);
+  }
 }
 

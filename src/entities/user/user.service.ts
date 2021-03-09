@@ -9,6 +9,12 @@ export class UserService {
   constructor(@InjectRepository(User) private userRepository: Repository<User>) {
   }
 
+  async findAll() {
+    // to do
+    // we need pagination
+    return this.userRepository.findAndCount();
+  }
+
   async findOneByUsername(username: string): Promise<User | undefined> {
     return this.userRepository.findOne({
       where: {
@@ -25,7 +31,7 @@ export class UserService {
     });
   }
 
-  async register(username: string, password: string, role: Role = Role.User): Promise<any> {
+  async register(username: string, password: string, role: Role = Role.User) {
     return this.findOneByUsername(username).then(r => {
       return r === undefined ? this.userRepository.insert(new User(username, password, role)) : undefined;
     });

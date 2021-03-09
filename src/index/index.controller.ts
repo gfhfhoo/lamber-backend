@@ -1,5 +1,4 @@
-import { Controller, Get, UseGuards } from "@nestjs/common";
-import { JwtAuthGuard } from "../auth/jwt-auth.guard";
+import { Controller, Get } from "@nestjs/common";
 import { RedisService } from "../redis/redis.service";
 
 @Controller()
@@ -9,13 +8,18 @@ export class IndexController {
 
   @Get("getNotice")
   async getNotice() {
-    return await this.redisService.get("anno")
+    return await this.redisService.get("short_notice");
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get("gets")
-  getNotice1() {
-    return 'okkk'
+  @Get("getRanking")
+  async getRanking() {
+    return await this.redisService.get("ranking");
   }
+
+  @Get("getAnno")
+  async getAnno() {
+    return await this.redisService.get("anno");
+  }
+
 
 }

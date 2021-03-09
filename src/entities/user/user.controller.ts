@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Query } from "@nestjs/common";
+import { Controller, Get, Post, Query, UseGuards } from "@nestjs/common";
 import * as crypto from "crypto-js";
 import { AuthService } from "../../auth/auth.service";
 import { User } from "./user.entity";
 import { UserService } from "./user.service";
 import { Role } from "../../role/role.enum";
+import { JwtAuthGuard } from "../../auth/jwt-auth.guard";
+import { Roles } from "../../role/role.decorator";
 
 @Controller()
 export class UserController {
@@ -31,5 +33,16 @@ export class UserController {
   async authChange(@Query("userId") userId: string,
                    @Query("newRole") role: string) {
     return Role[role] === role ? this.userService.updateById(userId, { role: role }) : undefined;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Admin)
+  @Get("GetUsers")
+  async getAllUsers(@Query("page") page: number) {
+    const res = await this.userService.findAll();
+    return {
+      data: res[0],
+      count: res[1]
+    };
   }
 }
