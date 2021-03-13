@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { IndexModule } from "./index/index.module";
-import { SubmitModule } from "./codeSubmit/submit.module";
+import { CodeModule } from "./code/code.module";
 import { UserModule } from "./entities/user/user.module";
 import { MongooseModule } from "@nestjs/mongoose";
 import { EventsModule } from "./websocket/events.module";
@@ -8,8 +8,9 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Connection } from "typeorm";
 import { ProblemModule } from "./entities/problem/problem.module";
 import { RedisModule } from "./redis/redis.module";
-import { APP_GUARD } from "@nestjs/core";
+import { APP_GUARD, APP_INTERCEPTOR } from "@nestjs/core";
 import { RoleGuard } from "./role/role.guard";
+import { ResponseInterceptor } from "./interceptor/response.interceptor";
 
 
 @Module({
@@ -19,7 +20,7 @@ import { RoleGuard } from "./role/role.guard";
       host: "localhost",
       port: 3306,
       username: "root",
-      password: "root",
+      password: "200108220zws",
       database: "lamber",
       autoLoadEntities: true,
       synchronize: true
@@ -29,12 +30,16 @@ import { RoleGuard } from "./role/role.guard";
       uri: "mongodb://127.0.0.1/lamber"
     })
   }),
-    IndexModule, SubmitModule, UserModule, EventsModule, ProblemModule, RedisModule],
+    IndexModule, CodeModule, UserModule, EventsModule, ProblemModule, RedisModule],
   controllers: [],
   providers: [{
     provide: APP_GUARD,
     useClass: RoleGuard
-  }]
+  },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseInterceptor
+    }]
 })
 export class AppModule {
   constructor(private connection: Connection) {

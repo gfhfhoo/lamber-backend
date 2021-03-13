@@ -20,7 +20,7 @@ export class Record {
   }
 
   @Prop()
-  recordId: string;
+  recordId: number;
   @Prop()
   submitterId: number;
   @Prop()
@@ -31,6 +31,8 @@ export class Record {
   timeUsed: number;
   @Prop()
   memoryUsed: number;
+  @Prop()
+  recordHash: string;
 
 }
 
