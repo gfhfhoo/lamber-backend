@@ -17,10 +17,13 @@ export class UtilsService {
   }
 
   async nextRecordId(): Promise<string> {
-    const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split("");
+    const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
     let id = [], i;
-    let radix = 24 || chars.length;
-    for (i = 0; i < 24; ++i) id[i] = chars[0 | Math.random() * radix];
+    let radix = chars.length;
+    for (i = 0; i < 16; ++i) id[i] = chars[0 | Math.random() * radix];
+    let array = Date.now().toString().split("");
+    let dateLength = array.length;
+    for (i = 0; i < dateLength; ++i) id.push(chars[0 | Math.random() * (Number(array[i]))]);
     return id.join("");
   }
 }

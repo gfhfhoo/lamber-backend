@@ -25,7 +25,8 @@ import * as mongoosePaginate from "mongoose-paginate";
       inject: [getConnectionToken()]
     }])],
   controllers: [ProblemController],
-  providers: [ProblemService]
+  providers: [ProblemService],
+  exports: [ProblemService]
 })
 
 export class ProblemModule {

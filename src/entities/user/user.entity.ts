@@ -20,4 +20,7 @@ export class User {
 
   @Column()
   role: Role;
+
+  @Column()
+  avatarImageId: string;
 }

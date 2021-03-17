@@ -11,6 +11,8 @@ import { RedisModule } from "./redis/redis.module";
 import { APP_GUARD, APP_INTERCEPTOR } from "@nestjs/core";
 import { RoleGuard } from "./role/role.guard";
 import { ResponseInterceptor } from "./interceptor/response.interceptor";
+import { ScheduleModule } from "@nestjs/schedule";
+import { TimingModule } from "./timingTask/timing.module";
 
 
 @Module({
@@ -20,7 +22,7 @@ import { ResponseInterceptor } from "./interceptor/response.interceptor";
       host: "localhost",
       port: 3306,
       username: "root",
-      password: "200108220zws",
+      password: "root",
       database: "lamber",
       autoLoadEntities: true,
       synchronize: true
@@ -30,7 +32,7 @@ import { ResponseInterceptor } from "./interceptor/response.interceptor";
       uri: "mongodb://127.0.0.1/lamber"
     })
   }),
-    IndexModule, CodeModule, UserModule, EventsModule, ProblemModule, RedisModule],
+    ScheduleModule.forRoot(), IndexModule, CodeModule, UserModule, EventsModule, ProblemModule, RedisModule, TimingModule],
   controllers: [],
   providers: [{
     provide: APP_GUARD,
