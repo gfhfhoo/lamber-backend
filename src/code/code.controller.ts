@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Logger,
   Post,
   Query,
   Req,
@@ -16,6 +17,8 @@ import { ProblemService } from "../entities/problem/problem.service";
 
 @Controller()
 export class CodeController {
+  private readonly logger = new Logger(CodeController.name);
+
   constructor(private readonly utils: UtilsService,
               private readonly amqp: AmqpService,
               private readonly problemService: ProblemService) {
@@ -37,7 +40,11 @@ export class CodeController {
       lang: body["lang"],
       code: body["code"]
     };
-    await this.amqp.sendMessage("task", sendBody);
-    return "success";
+    return this.amqp.sendMessage("task", sendBody).then(() => {
+      return "success";
+    }).catch(() => {
+      this.logger.error(`Encountered Fatal Error! Queue task had no response at ${Date.now().toString()}`);
+      throw new BadRequestException();
+    });
   }
 }

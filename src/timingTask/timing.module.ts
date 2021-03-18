@@ -1,22 +1,9 @@
 import { Module } from "@nestjs/common";
 import { TasksService } from "./timing.service";
-import { ClientsModule, Transport } from "@nestjs/microservices";
+import { AmqpModule } from "../amqp/amqp.module";
 
 @Module({
-  imports: [ClientsModule.register([
-    {
-      name: "MATH_SERVICE",
-      transport: Transport.RMQ,
-      options: {
-        urls: ["amqp://localhost:5672/vhost_dev"],
-        queue: "heart",
-        queueOptions: {
-          durable: true
-        },
-        noAck: false
-      }
-    }
-  ])],
+  imports: [AmqpModule],
   providers: [TasksService]
 })
 export class TimingModule {

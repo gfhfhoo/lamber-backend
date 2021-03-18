@@ -16,7 +16,7 @@ export class Competition {
   @Prop()
   title: string;
   @Prop()
-  problems: string[]
+  problems: string[];
 
 
 }

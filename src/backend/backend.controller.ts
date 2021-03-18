@@ -13,7 +13,7 @@ export class BackendController {
   @Roles(Role.Admin)
   @Post("publish_short_notice")
   async publishNotice(@Query("expire") ttl: number,
-                @Body() body: object) {
+                      @Body() body: object) {
     await this.manager.set("short_notice", body["data"]);
   }
 
@@ -21,7 +21,7 @@ export class BackendController {
   @Roles(Role.Admin)
   @Post("publish_anno")
   async publishAnno(@Query("expire") ttl: number,
-                @Body() body: object) {
+                    @Body() body: object) {
     await this.manager.set("anno", body["data"]);
   }
 
@@ -29,7 +29,7 @@ export class BackendController {
   @Roles(Role.Admin)
   @Get("getOverview")
   async getOverview() {
-    return ''
+    return "";
   }
 
 

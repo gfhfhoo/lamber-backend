@@ -8,7 +8,8 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService
-  ) {}
+  ) {
+  }
 
   async login(user: User) {
     // Alert: the password has been encrypted.

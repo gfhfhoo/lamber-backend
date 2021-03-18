@@ -1,0 +1,25 @@
+mysql:
+  host: "localhost"
+  port: 3306
+  username: "root"
+  password: "root"
+  database: "lamber"
+
+mongodb:
+  host: "127.0.0.1"
+  database: "lamber"
+
+redis:
+  host: "127.0.0.1"
+  port: 6379
+
+amqp:
+  host: "127.0.0.1"
+  port: 5672
+  username: "guest"
+  password: "guest"
+  vhost: "vhost_dev"
+  queue:
+    heartbeat: "heart"
+    task: "task"
+

@@ -1,23 +1,19 @@
-import { Inject, Injectable, Logger } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { Interval } from "@nestjs/schedule";
-import { ClientProxy } from "@nestjs/microservices";
+import { AmqpService } from "../amqp/amqp.service";
 
 @Injectable()
 export class TasksService {
   private readonly logger = new Logger(TasksService.name);
 
-  constructor(@Inject("MATH_SERVICE") private readonly client: ClientProxy) {
-  }
-
-  sendMessage(pattern: string, msg: any) {
-    return this.client.send(pattern, msg).toPromise();
+  constructor(private readonly amqp: AmqpService) {
   }
 
   @Interval(5000)
   async handleInterval() {
     this.logger.log("Sending heartbeat...");
-    await this.sendMessage("heart", {
+    await this.amqp.sendMessage("heart", {
       timeStamp: Date.now()
-    })
+    });
   }
 }
