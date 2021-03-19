@@ -14,7 +14,10 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, Response<T>> {
     return next
       .handle()
       .pipe(
-        map(data => ({ data: data, statusCode: context.switchToHttp().getResponse().statusCode }))
+        map(data => ({
+          data: data == undefined ? "" : data,
+          statusCode: context.switchToHttp().getResponse().statusCode
+        }))
       );
   }
 }

@@ -24,13 +24,15 @@ export class Record {
   @Prop()
   submitterId: number;
   @Prop()
-  CodeBody: string;
+  lang: string;
   @Prop()
-  status: string;
+  codeBody: string;
   @Prop()
-  timeUsed: number;
+  status: number = 0;
   @Prop()
-  memoryUsed: number;
+  timeUsed: number = 0;
+  @Prop()
+  memoryUsed: number = 0;
   @Prop()
   recordHash: string;
 

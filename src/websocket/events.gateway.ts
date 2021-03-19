@@ -5,10 +5,10 @@ import {
   WebSocketGateway,
   WebSocketServer
 } from "@nestjs/websockets";
-import { Logger } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { Server, Socket } from "socket.io";
 
-
+@Injectable()
 @WebSocketGateway(2333, { transports: ["websocket"] })
 export class EventsGateway implements OnGatewayInit, OnGatewayConnection {
 
@@ -31,8 +31,8 @@ export class EventsGateway implements OnGatewayInit, OnGatewayConnection {
     return data;
   }
 
-  broadcastMessage(data: string) {
-    this.wss.emit("broadcast", data);
+  broadcastMessage(data: string, event: string = "message") {
+    this.wss.emit(event, data);
   }
 }
 

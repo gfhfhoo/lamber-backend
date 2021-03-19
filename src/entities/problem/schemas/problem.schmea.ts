@@ -32,7 +32,7 @@ export class Problem {
   @Prop()
   memoryLimit: number; // kb
   @Prop()
-  detail: string;
+  detail: string = "";
   @Prop()
   sampleInput: string[] = [""];
   @Prop()
